@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	<context:annotation-config></context:annotation-config>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="WEB-INF/reboard" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name = "driverClassName" value = "oracle.jdbc.driver.OracleDriver"/>
+		<property name = "url" value = "jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name = "username" value = "aws01"/>
+		<property name = "password" value = "aws01"/>
+	</bean>
+	<bean id = "jdbcTemplate" class = "org.springframework.jdbc.core.JdbcTemplate">
+	<property name = "dataSource" ref = "dataSource"/>
+	</bean>
+	<bean id = "reboardDAO" class = "reboard.dao.ReBoardDAOImpl">
+	<property name = "jdbcTemplate" ref = "jdbcTemplate"></property>
+	</bean>
+	<bean class = "reboard.controller.BoardController"/>
+	<!-- <bean name = "/list_reboard.re" class = "reboard.controller.ListReBoardController">
+	<property name = "reboardDAO" ref = "reboardDAO"/>
+	</bean>
+	<bean name = "/content_reboard.re" class = "reboard.controller.ContentReBoardController">
+	<property name = "reboardDAO" ref = "reboardDAO"/>
+	</bean>
+	<bean name = "/writeForm_board.re" class= "reboard.controller.WriteFormBoardController">
+	</bean>
+	<bean name = "/writePro_board.re" class= "reboard.controller.WriteProBoardController">
+	<property name = "commandClass" value = "reboard.dto.ReBoardDTO">
+	</property>
+	<property name = "commandName" value = "rebaordCmd"/>
+	<property name = "reboardDAO" ref = "reboardDAO"/>
+	</bean>
+	-->
+</beans>

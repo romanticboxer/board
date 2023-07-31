@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	<mapper namespace = "reboard.mybatis.reBoardMapper">
+ 		<select id = "listReBoard" parameterType = "Map" resultType = "reBoardDTO">
+ 		 	select * from (select rownum rn,A.*from (select * from board order by re_step asc)A) where rn between #{startRow} and #{endRow}
+ 		</select>
+ 		<insert id = "writeReBoard" parameterType = "reBoardDTO">
+ 			insert into board values (board_seq.nextval,#{writer},#{email},#{subject},#{passwd},sysdate,0,#{content},#{ip},#{re_level},#{re_step})
+ 		</insert>
+ 		<select id = "getReBoard" parameterType = "int" resultType = "reBoardDTO">
+ 		select * from board where num = #{num}
+ 		</select>
+ 		<select id = "getCount" resultType = "int">
+ 		select count(*) from board
+ 		</select>
+ 		<update id ="setReadcount" parameterType = "int">
+ 		update board set readcount = readcount+1 where num = #{num}
+ 		</update>
+	</mapper>

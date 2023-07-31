@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+	<context:annotation-config></context:annotation-config>
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="WEB-INF/board" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+<!-- 	<bean id="dataSource"
+		class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName">
+			<value>jdbc/oracle</value>
+		</property>
+		<property name="resourceRef" value="true" />
+	</bean>-->
+	<bean id = "dataSource" class = "org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name = "driverClassName" value = "oracle.jdbc.driver.OracleDriver"/>
+		<property name = "url" value = "jdbc:oracle:thin:@localhost:1521:xe"/>
+		<property name = "username" value = "aws01"/>
+		<property name = "password" value = "aws01"/>
+	</bean><!-- 해당형태로 DB 접근 -->
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource">
+			<ref bean="dataSource" />
+		</property>
+	</bean>
+	<bean id="boardDAO" class="board.dao.BoardDAOImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	</bean>
+	<bean class = "board.controller.BoardController"/>
+	<!-- <bean name="/list_board.do"
+		class="board.controller.ListBoardController">
+		<property name="boardDAO" ref="boardDAO" />
+	</bean>
+	<bean name="/writeForm_board.do"
+		class="board.controller.WriteFormBoardController">
+
+	</bean>
+	<bean name="/writePro_board.do"
+		class="board.controller.WriteProBoardAbstractCommandController">
+		<property name="commandClass" value="board.dto.BoardDTO" />
+		<property name="commandName" value="boardCmd" />
+		<property name = "boardDAO" ref = "boardDAO"/>
+	</bean>
+	<bean name = "/content_board.do" class = "board.controller.ContentBoardController">
+	<property name = "boardDAO" ref = "boardDAO"/>
+	</bean>
+	<bean name = "/updateForm_board.do" class= "board.controller.UpdateFormBoardController">
+	<property name = "boardDAO" ref = "boardDAO"/>
+	</bean>
+	<bean name = "/updatePro_board.do" class = "board.controller.UpdateProBoardController">
+	
+	<property name = "boardDAO" ref = "boardDAO"/>
+	</bean>
+	<bean name = "/deletePro_board.do" class = "board.controller.DeleteProBoardController">
+	<property name = "boardDAO" ref = "boardDAO"/>
+	</bean>
+	<bean name = "/deleteForm_board.do" class= "board.controller.DeleteFormBoardController">
+	</bean>-->
+</beans>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace ="board.mybatis.boardMapper">
+ 	<select id = "listBoard" resultType = "boardDTO">
+ 		select * from springBoard order by num desc
+ 	</select>
+ 	<insert id = "insertBoard" parameterType = "boardDTO">
+ 		insert into springBoard values (springBoard_seq.nextval,#{writer},#{email},#{subject},#{passwd},sysdate,0,#{content},#{ip})
+ 	</insert>
+ 	<delete id = "deleteBoard" parameterType = "int">
+ 		delete from springBoard where num = #{num}
+ 	</delete>
+ 	<update id = "updateBoard" parameterType = "boardDTO">
+ 		update springBoard set subject = #{subject}, content = #{content} , email = #{email} where num = #{num} and passwd = #{passwd}
+ 	</update>
+ 	<select id = "getBoard" parameterType = "int" resultType = "boardDTO">
+ 		select * from springBoard where num = #{num}
+ 	</select>
+ 	<update id = "setContent" parameterType = "int">
+ 		update springBoard set readcount = readcount + 1 where num = #{num}
+ 	</update>
+ </mapper>

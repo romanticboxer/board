@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- property 설정 부 -->
+	<properties resource = "board/mybatis/db.properties"/>
+	<!-- settings 선언부,, 필요시 설정 -->
+	<!-- typeAlias 별명을 적는다 -->
+	<typeAliases>
+	<typeAlias type = "board.dto.BoardDTO" alias = "boardDTO"/>
+	<typeAlias type = "reboard.dto.ReBoardDTO" alias = "reBoardDTO"/>
+	</typeAliases>
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC" />
+			<dataSource type="POOLED">
+				<property name="driver" value="${driver}" />
+				<property name="url" value="${url}" />
+				<property name="username" value="${username}" />
+				<property name="password" value="${password}" />
+			</dataSource>
+		</environment>
+	</environments>
+	<mappers>
+	<!-- 여러개 등록 가능 , 쿼리문 실제 작성부 -->
+		<mapper resource="board/mybatis/boardMapper.xml" />
+		<mapper resource="reboard/mybatis/reBoardMapper.xml" />
+	</mappers>
+</configuration>
